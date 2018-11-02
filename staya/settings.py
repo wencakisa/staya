@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
 
+    # DRF Nested Routers
+    'rest_framework_nested',
+
     # Project apps
     'api',
     'users',

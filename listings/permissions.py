@@ -19,3 +19,23 @@ class ListingModifyingPermission(permissions.BasePermission):
             return True
 
         return obj.resident == request.user
+
+
+class ListingBookingPermission(permissions.BasePermission):
+    message = 'You can not book your own listings.'
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.resident != request.user
+
+
+class ListingReviewPermission(permissions.BasePermission):
+    message = 'You can not review your own listings.'
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.resident != request.user

@@ -37,3 +37,23 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='bookings')
+    check_in = models.DateField()
+    check_out = models.DateField()
+
+    def __str__(self):
+        return f'{self.__class__.__name__} #{self.id} for {self.listing}'
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='reviews')
+    score = models.PositiveSmallIntegerField(default=0)
+    text = models.CharField(max_length=256, blank=True)
+
+    def __str__(self):
+        return f'{self.__class__.__name__} for {self.listing} by {self.user} ({self.score})'
