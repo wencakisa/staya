@@ -7,6 +7,7 @@ from .serializers import ListingSerializer, BookingSerializer
 from .permissions import (
     ListingCreatingPermission, ListingModifyingPermission, ListingBookingPermission
 )
+from .filters import ListingsFreeDateFilterBackends
 
 
 class ListingViewSet(viewsets.ModelViewSet):
@@ -18,6 +19,7 @@ class ListingViewSet(viewsets.ModelViewSet):
         ListingCreatingPermission,
         ListingModifyingPermission,
     )
+    filter_backends = (ListingsFreeDateFilterBackends,)
 
     def perform_create(self, serializer):
         serializer.save(resident=self.request.user)
