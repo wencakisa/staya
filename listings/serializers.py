@@ -1,7 +1,13 @@
 from rest_framework import serializers
 
 from users.serializers import UserDetailsSerializer
-from .models import Amenity, Listing
+from .models import Location, Amenity, Listing
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ('id', 'name', 'longitude', 'latitude')
 
 
 class AmenitySerializer(serializers.ModelSerializer):
@@ -14,10 +20,11 @@ class ListingSerializer(serializers.ModelSerializer):
     title = serializers.CharField(min_length=3, max_length=256)
     resident = UserDetailsSerializer(read_only=True)
     amenities = AmenitySerializer(many=True)
+    location = LocationSerializer(read_only=True)
 
     class Meta:
         model = Listing
-        fields = ('id', 'title', 'description', 'resident', 'amenities')
+        fields = ('id', 'title', 'description', 'resident', 'amenities', 'location')
 
     def create(self, validated_data):
         amenities_data = validated_data.pop('amenities')
