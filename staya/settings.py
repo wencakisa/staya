@@ -168,3 +168,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 3
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.serializers.UserDetailsSerializer',
 }
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.serializers.UserRegisterSerializer',
+}
