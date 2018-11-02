@@ -1,3 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Amenity, Listing
+
+
+class ListingInline(admin.StackedInline):
+    model = Listing
+
+
+admin.site.register(Amenity)
+admin.site.register(Listing)
