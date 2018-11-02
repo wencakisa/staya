@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     # Django REST Framework
     'rest_framework',
     'rest_framework.authtoken',
+
+    # Django REST Authentication
     'rest_auth',
     'rest_auth.registration',
     'allauth',
@@ -136,6 +138,18 @@ STATIC_URL = '/static/'
 # Custom User Model
 
 AUTH_USER_MODEL = 'users.User'
+
+
+# REST Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 
 # Site ID
