@@ -6,6 +6,9 @@ from users.models import User
 class Amenity(models.Model):
     name = models.CharField(max_length=20)
 
+    class Meta:
+        verbose_name_plural = 'amenities'
+
     def __str__(self):
         return self.name
 
