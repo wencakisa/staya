@@ -16,7 +16,7 @@ class Amenity(models.Model):
 class Listing(models.Model):
     resident = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
     title = models.CharField(max_length=256)
-    description = models.TextField(max_length=10000, blank=True, null=True)
+    description = models.TextField(max_length=10000, blank=True)
     amenities = models.ManyToManyField(Amenity)
 
     def __str__(self):
