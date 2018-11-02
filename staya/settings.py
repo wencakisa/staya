@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Django REST Framework
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+
     # Project apps
     'api',
     'users',
