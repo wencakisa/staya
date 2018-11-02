@@ -23,7 +23,12 @@ class Amenity(models.Model):
 
 
 class Listing(models.Model):
-    resident = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
+    resident = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='listings',
+        limit_choices_to={'is_resident': True}
+    )
     title = models.CharField(max_length=256)
     description = models.TextField(max_length=10000, blank=True)
     amenities = models.ManyToManyField(Amenity)
