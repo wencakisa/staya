@@ -20,16 +20,18 @@ class ListingSerializer(serializers.ModelSerializer):
     title = serializers.CharField(min_length=3, max_length=256)
     resident = UserDetailsSerializer(read_only=True)
     amenities = AmenitySerializer(many=True)
-    location = LocationSerializer(read_only=True)
+    location = LocationSerializer()
 
     class Meta:
         model = Listing
         fields = ('id', 'title', 'description', 'resident', 'amenities', 'location')
 
     def create(self, validated_data):
+        location_data = validated_data.pop('location')
         amenities_data = validated_data.pop('amenities')
 
-        listing = Listing.objects.create(**validated_data)
+        location, _ = Location.objects.get_or_create(**location_data)
+        listing = Listing.objects.create(location=location, **validated_data)
 
         for amenity_data in amenities_data:
             listing.amenities.add(Amenity.objects.get(**amenity_data))
