@@ -11,6 +11,7 @@ class AmenitySerializer(serializers.ModelSerializer):
 
 
 class ListingSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(min_length=3, max_length=256)
     resident = UserDetailsSerializer(read_only=True)
     amenities = AmenitySerializer(many=True)
 
