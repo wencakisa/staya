@@ -39,6 +39,21 @@ class Listing(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def reviews_score_sum(self):
+        return self.reviews.aggregate(sum=models.Sum('score'))['sum']
+
+    @property
+    def total_reviews(self):
+        return self.reviews.count()
+
+    @property
+    def average_review_score(self):
+        if self.reviews_score_sum is None:
+            return 0
+
+        return self.reviews_score_sum / self.total_reviews
+
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')

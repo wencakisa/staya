@@ -49,6 +49,7 @@ class ListingSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'title', 'description', 'price_per_night',
+            'total_reviews', 'average_review_score',
             'resident', 'location',
             'amenities', 'bookings', 'reviews',
         )
