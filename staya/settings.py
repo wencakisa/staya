@@ -37,11 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # Django REST Framework
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
 
     # Project apps
     'api',
@@ -132,3 +136,8 @@ STATIC_URL = '/static/'
 # Custom User Model
 
 AUTH_USER_MODEL = 'users.User'
+
+
+# Site ID
+
+SITE_ID = 1
