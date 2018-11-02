@@ -37,3 +37,13 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='bookings')
+    check_in = models.DateField()
+    check_out = models.DateField()
+
+    def __str__(self):
+        return f'{self.__class__.__name__} #{self.id} for {self.listing}'

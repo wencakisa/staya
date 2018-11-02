@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from users.serializers import UserDetailsSerializer
-from .models import Location, Amenity, Listing
+from .models import Location, Amenity, Listing, Booking
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -41,3 +41,15 @@ class ListingSerializer(serializers.ModelSerializer):
             listing.amenities.add(Amenity.objects.get(**amenity_data))
 
         return listing
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ('id', 'check_in', 'check_out')
+
+    def validate(self, data):
+        if data['check_in'] > data['check_out']:
+            raise serializers.ValidationError('Check in should be before check out.')
+
+        return data
