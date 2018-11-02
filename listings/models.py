@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from users.models import User
 
@@ -50,6 +51,13 @@ class Booking(models.Model):
 
 
 class Review(models.Model):
+    REVIEW_MIN_SCORE = 0
+    REVIEW_MAX_SCORE = 5
+    REVIEW_SCORE_VALIDATORS = [
+        MinValueValidator(REVIEW_MIN_SCORE),
+        MaxValueValidator(REVIEW_MAX_SCORE)
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='reviews')
     score = models.PositiveSmallIntegerField(default=0)
