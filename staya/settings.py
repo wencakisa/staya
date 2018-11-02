@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     # DRF Nested Routers
     'rest_framework_nested',
 
+    # Django CORS Headers
+    'corsheaders',
+
     # Project apps
     'api',
     'users',
@@ -61,6 +64,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -176,3 +180,8 @@ REST_AUTH_SERIALIZERS = {
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'users.serializers.UserRegisterSerializer',
 }
+
+
+# CORS Headers
+
+CORS_ORIGIN_ALLOW_ALL = True
