@@ -15,19 +15,31 @@ class AmenitySerializer(serializers.ModelSerializer):
         model = Amenity
         fields = ('id', 'name')
 
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ('id', 'check_in', 'check_out')
+
+    def validate(self, data):
+        if data['check_in'] > data['check_out']:
+            raise serializers.ValidationError('Check in should be before check out.')
+
+        return data
+
 
 class ListingSerializer(serializers.ModelSerializer):
     title = serializers.CharField(min_length=3, max_length=256)
     resident = UserDetailsSerializer(read_only=True)
     amenities = AmenitySerializer(many=True)
     location = LocationSerializer()
+    bookings = BookingSerializer(many=True, read_only=True)
 
     class Meta:
         model = Listing
         fields = (
             'id',
             'title', 'description', 'price_per_night',
-            'resident', 'amenities', 'location'
+            'resident', 'amenities', 'location', 'bookings'
         )
 
     def create(self, validated_data):
@@ -41,15 +53,3 @@ class ListingSerializer(serializers.ModelSerializer):
             listing.amenities.add(Amenity.objects.get(**amenity_data))
 
         return listing
-
-
-class BookingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Booking
-        fields = ('id', 'check_in', 'check_out')
-
-    def validate(self, data):
-        if data['check_in'] > data['check_out']:
-            raise serializers.ValidationError('Check in should be before check out.')
-
-        return data
