@@ -141,3 +141,12 @@ AUTH_USER_MODEL = 'users.User'
 # Site ID
 
 SITE_ID = 1
+
+
+# Authentication settings
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ACCOUNT_USERNAME_MIN_LENGTH = 3
