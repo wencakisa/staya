@@ -31,6 +31,7 @@ class Listing(models.Model):
     )
     title = models.CharField(max_length=256)
     description = models.TextField(max_length=10000, blank=True)
+    price_per_night = models.DecimalField(default=0, max_digits=6, decimal_places=2)
     amenities = models.ManyToManyField(Amenity)
     location = models.ForeignKey(Location, on_delete=models.DO_NOTHING, related_name='listings')
 

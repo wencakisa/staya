@@ -24,7 +24,11 @@ class ListingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Listing
-        fields = ('id', 'title', 'description', 'resident', 'amenities', 'location')
+        fields = (
+            'id',
+            'title', 'description', 'price_per_night',
+            'resident', 'amenities', 'location'
+        )
 
     def create(self, validated_data):
         location_data = validated_data.pop('location')
