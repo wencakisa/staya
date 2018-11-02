@@ -30,12 +30,6 @@ class BookingSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = UserDetailsSerializer(read_only=True)
-    score = serializers.IntegerField(
-        required=True,
-        min_value=Review.REVIEW_MIN_SCORE,
-        max_value=Review.REVIEW_MAX_SCORE
-    )
-    text = serializers.CharField(required=False, max_length=256)
 
     class Meta:
         model = Review

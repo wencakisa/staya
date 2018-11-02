@@ -60,7 +60,7 @@ class Review(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='reviews')
-    score = models.PositiveSmallIntegerField(default=0)
+    score = models.PositiveSmallIntegerField(default=0, validators=REVIEW_SCORE_VALIDATORS)
     text = models.CharField(max_length=256, blank=True)
 
     def __str__(self):
