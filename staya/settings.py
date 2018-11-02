@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # Project apps
     'api',
     'users',
+    'listings',
 ]
 
 MIDDLEWARE = [
