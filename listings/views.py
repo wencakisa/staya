@@ -28,36 +28,30 @@ class ListingViewSet(viewsets.ModelViewSet):
         serializer.save(resident=self.request.user)
 
 
-class BookingViewSet(viewsets.ModelViewSet):
+class BaseNestedListingResourceViewSet(viewsets.ModelViewSet):
+    model_class = None
+
+    def get_queryset(self):
+        return self.model_class.objects.filter(listing=self.kwargs['listing_pk'])
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        listings = Listing.objects.all()
+
+        listing = get_object_or_404(listings, id=self.kwargs['listing_pk'])
+
+        self.check_object_permissions(self.request, listing)
+
+        serializer.save(user=user, listing=listing)
+
+
+class BookingViewSet(BaseNestedListingResourceViewSet):
     serializer_class = BookingSerializer
     permission_classes = (IsAuthenticated, ListingBookingPermission)
+    model_class = Booking
 
-    def get_queryset(self):
-        return Booking.objects.filter(listing=self.kwargs['listing_pk'])
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        listings = Listing.objects.all()
-
-        listing = get_object_or_404(listings, id=self.kwargs['listing_pk'])
-
-        self.check_object_permissions(self.request, listing)
-
-        serializer.save(user=user, listing=listing)
-
-class ReviewViewSet(viewsets.ModelViewSet):
+class ReviewViewSet(BaseNestedListingResourceViewSet):
     serializer_class = ReviewSerializer
     permission_classes = (IsAuthenticated, ListingReviewPermission)
-
-    def get_queryset(self):
-        return Review.objects.filter(listing=self.kwargs['listing_pk'])
-
-    def perform_create(self, serializer):
-        user = self.request.user
-        listings = Listing.objects.all()
-
-        listing = get_object_or_404(listings, id=self.kwargs['listing_pk'])
-
-        self.check_object_permissions(self.request, listing)
-
-        serializer.save(user=user, listing=listing)
+    model_class = Review
