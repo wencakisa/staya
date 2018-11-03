@@ -73,6 +73,10 @@ module.exports = {
         tokenRequired: true,
         tokenType: 'Token'
       }
+    },
+    redirect: {
+      login: '/auth/login',
+      logout: '/'
     }
   }
 }
