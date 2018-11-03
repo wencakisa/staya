@@ -4,6 +4,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from users.models import User
 
 
+def listing_image_directory_path(instance, filename):
+    return f'listings/{instance.listing.id}/{filename}'
+
+
 class Location(models.Model):
     name = models.CharField(max_length=256)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -53,6 +57,11 @@ class Listing(models.Model):
             return 0
 
         return self.reviews_score_sum / self.total_reviews
+
+
+class ListingImage(models.Model):
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=listing_image_directory_path)
 
 
 class Booking(models.Model):

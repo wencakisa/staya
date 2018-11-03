@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Django REST Framework
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_extra_fields',
 
     # Django REST Authentication
     'rest_auth',
@@ -141,6 +142,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Media files
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 # Custom User Model

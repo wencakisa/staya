@@ -5,7 +5,6 @@ from rest_framework_nested import routers as nested_routers
 
 from listings.views import ListingViewSet, BookingViewSet, ReviewViewSet
 
-
 listings_router = routers.SimpleRouter()
 listings_router.register('listings', ListingViewSet)
 
