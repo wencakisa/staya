@@ -13,6 +13,8 @@ const bot = new BootBot({
 const baseAPIUrl = 'http://localhost:8000/api/v1/'
 const baseClientUrl = 'http://localhost:3000/'
 
+bot.setGreetingText('Hello, I am Staya Chat Bot! With me you can easily operate with Staya app directly from your Messenger! :)')
+
 bot.hear(['hello', 'hi', /hey( there)?/i], (payload, chat) => {
   chat.say('Hello from Staya Chat Bot!')
 })
@@ -41,13 +43,21 @@ bot.on('attachment', (payload, chat) => {
             image_url: listing.images[0].image,
             default_action: {
               type: 'web_url',
-              url: `${baseClientUrl}listings/${listing.id}`
+              url: `${baseClientUrl}listings/${listing.id}`,
+              webview_height_ratio: 'tall'
             }
           })
         })
 
         chat.say({
-          cards: chatElements
+          cards: chatElements,
+          buttons: [
+            {
+              type: 'web_url',
+              url: `${baseClientUrl}`,
+              title: 'Book now'
+            }
+          ]
         })
       })
       .catch((err) => {
