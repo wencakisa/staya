@@ -25,7 +25,7 @@ SECRET_KEY = 'cj5ony@w%%37rx55qm*t=7+#s#ge@=ik8ya4_+(w@1lne#1$pd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hk-pu6ki.staykeepers.com']
+ALLOWED_HOSTS = ['localhost', 'hk-pu6ki.staykeepers.com']
 
 
 # Application definition
