@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Location, Amenity, Listing
+from .models import Location, Amenity, Listing, Booking, Review
 
 
 class ListingInline(admin.StackedInline):
@@ -10,3 +10,5 @@ class ListingInline(admin.StackedInline):
 admin.site.register(Location)
 admin.site.register(Amenity)
 admin.site.register(Listing)
+admin.site.register(Booking)
+admin.site.register(Review)
