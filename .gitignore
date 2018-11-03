@@ -4,6 +4,9 @@
 # Visual Studio Code configuration
 .vscode/
 
+# Django media static files
+media/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
