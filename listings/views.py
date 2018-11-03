@@ -1,16 +1,27 @@
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-from rest_framework.generics import get_object_or_404
 
-from .models import Listing, Booking, Review
-from .serializers import ListingSerializer, BookingSerializer, ReviewSerializer
+from .models import Amenity, Listing, Booking, Review
+from .serializers import (
+    AmenitySerializer,
+    ListingSerializer,
+    BookingSerializer,
+    ReviewSerializer
+)
 from .permissions import (
+    IsResidentUser,
     ListingCreatingPermission,
     ListingModifyingPermission,
     ListingBookingPermission,
     ListingReviewPermission
 )
 from .filters import ListingsFreeDateFilter
+
+
+class AmenitiesList(generics.ListAPIView):
+    serializer_class = AmenitySerializer
+    queryset = Amenity.objects.all()
+    permission_classes = (IsAuthenticated, IsResidentUser)
 
 
 class ListingViewSet(viewsets.ModelViewSet):
@@ -20,7 +31,7 @@ class ListingViewSet(viewsets.ModelViewSet):
         # Listings should be availbable for anonymous users too
         IsAuthenticatedOrReadOnly,
         ListingCreatingPermission,
-        ListingModifyingPermission,
+        ListingModifyingPermission
     )
     filter_backends = (filters.SearchFilter, ListingsFreeDateFilter)
     search_fields = ('title', 'guest_amount', 'location__name', 'resident__username')
@@ -39,7 +50,7 @@ class BaseNestedListingResourceViewSet(viewsets.ModelViewSet):
         user = self.request.user
         listings = Listing.objects.all()
 
-        listing = get_object_or_404(listings, id=self.kwargs['listing_pk'])
+        listing = generics.get_object_or_404(listings, id=self.kwargs['listing_pk'])
 
         self.check_object_permissions(self.request, listing)
 

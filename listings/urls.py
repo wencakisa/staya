@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_nested import routers as nested_routers
 
-from listings.views import ListingViewSet, BookingViewSet, ReviewViewSet
+from listings.views import AmenitiesList, ListingViewSet, BookingViewSet, ReviewViewSet
 
 listings_router = routers.SimpleRouter()
 listings_router.register('listings', ListingViewSet)
@@ -18,4 +18,5 @@ urlpatterns = [
     path('', include(listings_router.urls), name='listings'),
     path('', include(bookings_router.urls), name='listing-bookings'),
     path('', include(reviews_router.urls), name='listing-reviews'),
+    path('amenities/', AmenitiesList.as_view(), name='amenities'),
 ]

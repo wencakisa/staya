@@ -1,6 +1,13 @@
 from rest_framework import permissions
 
 
+class IsResidentUser(permissions.BasePermission):
+    message = 'You have to be a resident user in order to access this view.'
+
+    def has_permission(self, request, view):
+        return request.user.is_resident
+
+
 class ListingCreatingPermission(permissions.BasePermission):
     message = 'You have to be a resident user in order to create listings.'
 
