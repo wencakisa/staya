@@ -1,6 +1,7 @@
 'use strict'
-require('dotenv').config()
 
+require('dotenv').config()
+const axios = require('axios')
 const BootBot = require('bootbot')
 
 const bot = new BootBot({
@@ -8,6 +9,8 @@ const bot = new BootBot({
   verifyToken: process.env.FB_VERIFY_TOKEN,
   appSecret: process.env.FB_APP_SECRET
 })
+
+const baseUrl = 'http://localhost:8000/api/v1/'
 
 bot.hear(['hello', 'hi', /hey( there)?/i], (payload, chat) => {
   chat.say('Hello from Staya Chat Bot!')
@@ -18,11 +21,37 @@ bot.on('attachment', (payload, chat) => {
 
   if (attachment.type === 'location') {
     let locationTitle = attachment.title
-    let locationCoordinates = attachment.payload.coordinates
 
-    console.log('Title: ' + locationTitle)
-    console.log('Longitude: ' + locationCoordinates.long)
-    console.log('Latitude: ' + locationCoordinates.lat)
+    let locationCoordinates = attachment.payload.coordinates
+    let long = locationCoordinates.long
+    let lat = locationCoordinates.lat
+
+    let url = baseUrl + `listings?near_long=${long}&near_lat=${lat}`
+
+    axios.get(url)
+      .then((resp) => {
+        chat.say(`Showing you listings nearby ${locationTitle}...`)
+
+        let chatElements = []
+        resp.data.forEach(listing => {
+          chatElements.push({
+            title: listing.title,
+            subtitle: listing.description,
+            image_url: listing.images[0].image,
+            default_action: {
+              type: 'web_url',
+              url: 'https://google.com'
+            }
+          })
+        })
+
+        chat.say({
+          cards: chatElements
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 })
 
