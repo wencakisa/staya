@@ -10,7 +10,8 @@ const bot = new BootBot({
   appSecret: process.env.FB_APP_SECRET
 })
 
-const baseUrl = 'http://localhost:8000/api/v1/'
+const baseAPIUrl = 'http://localhost:8000/api/v1/'
+const baseClientUrl = 'http://localhost:3000/'
 
 bot.hear(['hello', 'hi', /hey( there)?/i], (payload, chat) => {
   chat.say('Hello from Staya Chat Bot!')
@@ -26,7 +27,7 @@ bot.on('attachment', (payload, chat) => {
     let long = locationCoordinates.long
     let lat = locationCoordinates.lat
 
-    let url = baseUrl + `listings?near_long=${long}&near_lat=${lat}`
+    let url = `${baseAPIUrl}listings?near_long=${long}&near_lat=${lat}`
 
     axios.get(url)
       .then((resp) => {
@@ -40,7 +41,7 @@ bot.on('attachment', (payload, chat) => {
             image_url: listing.images[0].image,
             default_action: {
               type: 'web_url',
-              url: 'https://google.com'
+              url: `${baseClientUrl}listings/${listing.id}`
             }
           })
         })
