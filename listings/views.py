@@ -10,7 +10,7 @@ from .permissions import (
     ListingBookingPermission,
     ListingReviewPermission
 )
-from .filters import ListingFilter, ListingsFreeDateFilter
+from .filters import ListingsFreeDateFilter
 
 
 class ListingViewSet(viewsets.ModelViewSet):
