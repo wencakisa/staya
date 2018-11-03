@@ -43,19 +43,19 @@ bot.on('attachment', (payload, chat) => {
             image_url: listing.images[0].image,
             default_action: {
               type: 'web_url',
-              url: `${baseClientUrl}listings/${listing.id}`,
-              webview_height_ratio: 'tall'
+              url: `${baseClientUrl}listings/${listing.id}`
             }
           })
         })
 
         chat.say({
-          cards: chatElements,
+          top_element_style: 'compact',
+          elements: chatElements,
           buttons: [
             {
+              title: 'Book now',
               type: 'web_url',
-              url: `${baseClientUrl}`,
-              title: 'Book now'
+              url: `${baseClientUrl}`
             }
           ]
         })
