@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.generics import get_object_or_404
 
@@ -10,7 +10,7 @@ from .permissions import (
     ListingBookingPermission,
     ListingReviewPermission
 )
-from .filters import ListingsFreeDateFilterBackends
+from .filters import ListingFilter, ListingsFreeDateFilter
 
 
 class ListingViewSet(viewsets.ModelViewSet):
@@ -22,7 +22,8 @@ class ListingViewSet(viewsets.ModelViewSet):
         ListingCreatingPermission,
         ListingModifyingPermission,
     )
-    filter_backends = (ListingsFreeDateFilterBackends,)
+    filter_backends = (filters.SearchFilter, ListingsFreeDateFilter)
+    search_fields = ('title', 'guest_amount', 'location__name', 'resident__username')
 
     def perform_create(self, serializer):
         serializer.save(resident=self.request.user)
