@@ -31,6 +31,6 @@ class NearbyListingsFilter(filters.BaseFilterBackend):
             queryset = queryset.filter(
                 location__longitude__range=longitude_range,
                 location__latitude__range=latitude_range
-            )
+            )[:5]
 
         return queryset
