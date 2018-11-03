@@ -11,3 +11,9 @@ export const getters = {
     return state.auth.user.is_resident
   }
 }
+
+export const mutations = {
+  becomeResident(state) {
+    state.auth.user.is_resident = true
+  }
+}

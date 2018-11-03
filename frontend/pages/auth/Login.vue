@@ -1,5 +1,5 @@
 <template>
-  <div class="conteiner">
+  <div class="container">
     <section class="hero is-danger is-fullheight-with-navbar">
       <div class="hero-body">
         <div class="container has-text-centered">
