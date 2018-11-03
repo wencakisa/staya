@@ -28,6 +28,13 @@ class Amenity(models.Model):
 
 
 class Listing(models.Model):
+    LISTING_MIN_GUEST_AMOUNT = 0
+    LISTING_MAX_GUEST_AMOUNT = 21
+    LISTING_GUEST_AMOUNT_VALIDATORS = [
+        MinValueValidator(LISTING_MIN_GUEST_AMOUNT),
+        MaxValueValidator(LISTING_MAX_GUEST_AMOUNT)
+    ]
+
     resident = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -36,7 +43,8 @@ class Listing(models.Model):
     )
     title = models.CharField(max_length=256)
     description = models.TextField(max_length=10000, blank=True)
-    price_per_night = models.DecimalField(default=0, max_digits=6, decimal_places=2)
+    price_per_night = models.DecimalField(max_digits=6, decimal_places=2)
+    guest_amount = models.PositiveSmallIntegerField(validators=LISTING_GUEST_AMOUNT_VALIDATORS)
     amenities = models.ManyToManyField(Amenity)
     location = models.ForeignKey(Location, on_delete=models.DO_NOTHING, related_name='listings')
 
@@ -84,7 +92,7 @@ class Review(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='reviews')
-    score = models.PositiveSmallIntegerField(default=0, validators=REVIEW_SCORE_VALIDATORS)
+    score = models.PositiveSmallIntegerField(validators=REVIEW_SCORE_VALIDATORS)
     text = models.CharField(max_length=256, blank=True)
 
     def __str__(self):
