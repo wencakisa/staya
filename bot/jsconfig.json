@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "target": "es6",
+        "module": "commonjs"
+    },
+    "exclude": [
+        "node_modules",
+        "bower_components",
+        "tmp",
+        "temp",
+        "jspm_packages"
+    ]
+}
