@@ -1,7 +1,7 @@
 from rest_framework import filters
 
 
-class ListingsFreeDateFilterBackends(filters.BaseFilterBackend):
+class ListingsFreeDateFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         free_from = request.query_params.get('free_from', None)
         free_to = request.query_params.get('free_to', None)
