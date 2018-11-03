@@ -34,7 +34,7 @@ class ListingViewSet(viewsets.ModelViewSet):
         ListingModifyingPermission
     )
     filter_backends = (filters.SearchFilter, ListingsFreeDateFilter)
-    search_fields = ('title', 'guest_amount', 'location__name', 'resident__username')
+    search_fields = ('title', 'guest_amount', 'location__title', 'resident__username')
 
     def perform_create(self, serializer):
         serializer.save(resident=self.request.user)

@@ -8,7 +8,7 @@ from .models import Location, Amenity, Listing, ListingImage, Booking, Review
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ('id', 'name', 'longitude', 'latitude')
+        fields = ('id', 'title', 'longitude', 'latitude')
 
 
 class AmenitySerializer(serializers.ModelSerializer):

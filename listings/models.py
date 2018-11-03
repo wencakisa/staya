@@ -9,12 +9,12 @@ def listing_image_directory_path(instance, filename):
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=256)
+    title = models.CharField(max_length=256)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
     def __str__(self):
-        return f'{self.name} [{self.longitude}; {self.latitude}]'
+        return f'{self.title} [{self.longitude}; {self.latitude}]'
 
 
 class Amenity(models.Model):
