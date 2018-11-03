@@ -1,3 +1,6 @@
+from math import cos
+from datetime import date
+
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
@@ -9,6 +12,11 @@ def listing_image_directory_path(instance, filename):
 
 
 class Location(models.Model):
+    LAT_DEGREE_TO_KM = 110.574
+    LONG_DEGREE_TO_KM = 111.320 * cos(LAT_DEGREE_TO_KM)
+    NEARBY_KM_LAT = LAT_DEGREE_TO_KM * 0.005
+    NEARBY_KM_LONG = LONG_DEGREE_TO_KM * 0.005
+
     title = models.CharField(max_length=256)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -78,8 +86,15 @@ class Booking(models.Model):
     check_in = models.DateField()
     check_out = models.DateField()
 
+    class Meta:
+        ordering = ['-check_in']
+
     def __str__(self):
         return f'{self.__class__.__name__} #{self.id} for {self.listing}'
+
+    @classmethod
+    def current_bookings(cls):
+        return cls.objects.filter(check_out__lte=date.today())
 
 
 class Review(models.Model):

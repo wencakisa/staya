@@ -60,7 +60,7 @@ class ListingSerializer(serializers.ModelSerializer):
             'id',
             'title', 'description', 'price_per_night', 'guest_amount',
             'total_reviews', 'average_review_score',
-            'resident', 'location',
+            'resident', 'location', 'location',
             'amenities', 'bookings', 'reviews', 'images',
         )
 
