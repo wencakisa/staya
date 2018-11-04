@@ -51,8 +51,8 @@ class ListingReviewPermission(BaseNestedListingResourcePermission):
     message = 'You can not review your own listings.'
 
 
-# class ListingIsUnbookedYet(permissions.BasePermission):
-#     message = 'Listing is booked.'
+class ListingIsUnbookedYet(permissions.BasePermission):
+    message = 'Listing is booked.'
 
-#     def has_object_permission(self, request, view, obj):
-#         return obj.is_unbooked(request.data['check_in'], request.data['check_out'])
+    def has_object_permission(self, request, view, obj):
+        return obj.is_unbooked(request.data['check_in'], request.data['check_out'])

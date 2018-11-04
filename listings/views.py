@@ -16,7 +16,7 @@ from .permissions import (
     ListingModifyingPermission,
     ListingBookingPermission,
     ListingReviewPermission,
-    # ListingIsUnbookedYet
+    ListingIsUnbookedYet
 )
 from .filters import ListingsFreeDateFilter, NearbyListingsFilter
 
@@ -45,7 +45,7 @@ class ListingViewSet(viewsets.ModelViewSet):
 
 class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
-    permission_classes = (IsAuthenticated, ListingBookingPermission)
+    permission_classes = (IsAuthenticated, ListingBookingPermission, ListingIsUnbookedYet)
 
     def get_queryset(self):
         return Booking.current_bookings().filter(listing=self.kwargs['listing_pk'])
