@@ -24,7 +24,7 @@ from .filters import ListingsFreeDateFilter, NearbyListingsFilter
 class AmenitiesList(generics.ListAPIView):
     serializer_class = AmenitySerializer
     queryset = Amenity.objects.all()
-    permission_classes = (IsAuthenticated, IsResidentUser)
+    permission_classes = (IsAuthenticated,)
 
 
 class ListingViewSet(viewsets.ModelViewSet):
