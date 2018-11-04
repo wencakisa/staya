@@ -69,24 +69,6 @@
                   placeholder="Last name">
               </div>
             </div>
-            <!-- <div class="field">
-              <input 
-                id="visitor"
-                v-model="isResident" 
-                :value="false"
-                class="is-checkradio is-black"
-                type="radio"
-                name="radioInline">
-              <label for="visitor">Visitor</label>
-              <input
-                id="resident"
-                v-model="isResident" 
-                :value="true"
-                class="is-checkradio is-black"
-                type="radio"
-                name="radioInline">
-              <label for="resident">Resident</label>
-            </div> -->
             <button 
               type="submit"
               class="button is-block is-dark is-large is-fullwidth">
@@ -112,8 +94,7 @@ export default {
       password: "",
       confirmPassword: "",
       firstName: "",
-      lastName: "",
-      // isResident: false
+      lastName: ""
     };
   },
   methods: {
@@ -125,8 +106,7 @@ export default {
           password1: this.password,
           password2: this.confirmPassword,
           first_name: this.firstName,
-          last_name: this.lastName,
-          // is_resident: this.isResident
+          last_name: this.lastName
         })
 
         await this.$auth.loginWith('local', {
