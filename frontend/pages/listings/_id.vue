@@ -157,6 +157,10 @@ export default {
       this.maxCheckOutDate = closest
     },
     book() {
+      if (!this.$store.getters.isLoggedIn) {
+        this.$router.push('/auth/login')
+      }
+
       this.$axios.post(`/listings/${this.$route.params.id}/bookings/`, {
         check_in: this.$moment(this.checkInDate).format('YYYY-MM-DD'),
         check_out: this.$moment(this.checkOutDate).format('YYYY-MM-DD')

@@ -63,6 +63,7 @@
           <div class="navbar-dropdown is-right">
             <a
               v-if="!$store.getters.isResident"
+              href="listings/add"
               class="navbar-item">
               Become resident
             </a>

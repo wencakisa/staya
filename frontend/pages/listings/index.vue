@@ -15,7 +15,7 @@
           @click="$router.push(`/listings/${listing.id}`)">
           <div class="card-image">
             <figure class="image is-16by9">
-              <img :src="listing.images[0].image">
+              <img :src="listing.images[0].image_url">
             </figure>
           </div>
           <div class="card-content">
