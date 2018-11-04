@@ -19,7 +19,7 @@
               :class="{ 'vueperslide--active': slide.id === 0 }"
               v-for="slide in slides"
               :key="slide.id"
-              :image="slide.image"/>
+              :image="slide.image_url"/>
           </vueper-slides>
           <img
             v-else
