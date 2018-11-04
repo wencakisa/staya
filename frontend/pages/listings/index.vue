@@ -48,9 +48,16 @@ export default {
     };
   },
   mounted() {
-    let url = this.$route.query.search
-      ? `/listings?search=${this.$route.query.search}`
-      : "/listings";
+    let url = new URL(`${this.$axios.defaults.baseURL}/listings`)
+    if (this.$route.query.search) {
+      url.searchParams.append('search', this.$route.query.search);
+    }
+    if (this.$route.query.free_from) {
+      url.searchParams.append('free_from', this.$route.query.free_from);
+    }
+    if (this.$route.query.free_to) {
+      url.searchParams.append('free_to', this.$route.query.free_to);
+    }
     return this.$axios.get(url).then(res => {
       this.listings = res.data;
     });
