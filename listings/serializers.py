@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from drf_extra_fields.fields import Base64ImageField
 
+import cloudinary
+
 from users.serializers import UserDetailsSerializer
 from .models import Location, Amenity, Listing, ListingImage, Booking, Review
 
@@ -39,10 +41,11 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class ListingImageSerializer(serializers.ModelSerializer):
     image = Base64ImageField()
+    image_url = serializers.URLField(read_only=True)
 
     class Meta:
         model = ListingImage
-        fields = ('id', 'image')
+        fields = ('id', 'image', 'image_url')
 
 
 class ListingSerializer(serializers.ModelSerializer):
@@ -76,7 +79,11 @@ class ListingSerializer(serializers.ModelSerializer):
             listing.amenities.add(Amenity.objects.get(**amenity_data))
 
         for image_data in images_data:
-            ListingImage.objects.create(listing=listing, **image_data)
+            image = image_data['image']
+            upload_hash = cloudinary.uploader.upload(image, use_filename=True)
+            image_url = upload_hash['secure_url']
+
+            ListingImage.objects.create(listing=listing, image=image, image_url=image_url)
 
         return listing
 

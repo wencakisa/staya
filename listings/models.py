@@ -1,7 +1,10 @@
 from datetime import date
+import os
 
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+
+import cloudinary
 
 from users.models import User
 from .utils import longitude_nearby_locations_range, latitude_nearby_locations_range
@@ -107,6 +110,7 @@ class Listing(models.Model):
 class ListingImage(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to=listing_image_directory_path)
+    image_url = models.URLField(blank=True)
 
 
 class Booking(models.Model):
