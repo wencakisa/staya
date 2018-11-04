@@ -66,6 +66,11 @@
               class="navbar-item">
               Become resident
             </a>
+            <a
+              class="navbar-item"
+              :href="`/bookings`">
+              My Bookings
+            </a>
             <a 
               v-if="$store.getters.isResident"
               :href="`/listings?search=${$auth.user.username}`" 

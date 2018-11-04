@@ -36,7 +36,8 @@
               height="450"
               frameborder="0" style="border:0"
               :src="`https://www.google.com/maps/embed/v1/place?key=${apiKey}
-                &q=${location.title || 'Sofia'}`" allowfullscreen>
+                &q=${location.title || 'Sofia'}`" 
+              allowfullscreen>
             </iframe>
           </section>
           <div class="column is-4 is-medium">
@@ -60,18 +61,20 @@
                 name="checkInDate"
                 :unselectable-dates="bookedDates"
                 placeholder="Check in"
-                @input="nearestFutureAvailableDate(checkInDate)"
-                icon="calendar-today" />
+                @input="nearestFutureAvailableDate(checkInDate); setMinCheckOutDate(checkInDate)"
+                icon="calendar-today"
+                required/>
               <b-datepicker
                 v-model="checkOutDate"
-                :min-date="new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)"
+                :min-date="minCheckOutDate"
                 :max-date="maxCheckOutDate"
                 :unselectable-dates="bookedDates"
                 name="checkOutDate"
                 placeholder="Check out"
-                icon="calendar-today" />
+                icon="calendar-today" 
+                required/>
             </b-field>
-              <button class="button is-fullwidth is-dark">Book</button>
+              <button class="button is-fullwidth is-dark" @click="book">Book</button>
           </div>
         </div>
       </div>
@@ -114,11 +117,13 @@ export default {
         longtitude: 0,
         latitude: 0
       },
+      guests: 0,
       bookings: [],
       today: new Date(),
       bookedDates: [],
       checkInDate: null,
       checkOutDate: null,
+      minCheckOutDate: new Date(),
       maxCheckOutDate: new Date(86400000000000),
       apiKey: process.env.GEOCODE_API_KEY
     }
@@ -150,6 +155,22 @@ export default {
       });
 
       this.maxCheckOutDate = closest
+    },
+    book() {
+      this.$axios.post(`/listings/${this.$route.params.id}/bookings/`, {
+        check_in: this.$moment(this.checkInDate).format('YYYY-MM-DD'),
+        check_out: this.$moment(this.checkOutDate).format('YYYY-MM-DD')
+      }).then(() => {
+        this.$toasted.success("Successfully made booking for the requested dates.")
+        this.$router.push('/bookings')
+      }).catch(e => {
+        this.$toasted.error(JSON.stringify(e.response.data))
+      })
+    },
+    setMinCheckOutDate(checkInDate) {
+      var result = new Date(checkInDate)
+      result.setDate(result.getDate() + 1)
+      this.minCheckOutDate = result
     }
   },
   transition: "bounce"

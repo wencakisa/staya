@@ -6,11 +6,11 @@
           <div class="column is-8 is-offset-2">
             <div class="box">
               <h3 class="title has-text-grey-dark">Book a room or apartment</h3>
-              <section class="form">
+              <form class="form" @submit.prevent="doSearch">
                 <div class="field">
                   <div class="control">
                     <input 
-                      v-model="city"
+                      v-model="search"
                       class="input is-large"
                       type="text"
                       placeholder="City"
@@ -21,8 +21,9 @@
                 <b-field>
                   <b-datepicker
                     v-model="checkInDate"
-                    :min-date="checkInMinDate"
+                    :min-date="minCheckInDate"
                     name="checkInDate"
+                    @input="setMinCheckOutDate(checkInDate)"
                     placeholder="Check in"
                     icon="calendar-today"
                     editable/>
@@ -31,18 +32,16 @@
                 <b-field>
                   <b-datepicker
                     v-model="checkOutDate"
-                    :min-date="checkOutMinDate"
+                    :min-date="minCheckOutDate"
                     name="checkOutDate"
                     placeholder="Check out"
                     icon="calendar-today" />
                 </b-field>
-                <button 
-                  class="button is-block is-dark is-large is-fullwidth"
-                  @click="search">
+                <button class="button is-block is-dark is-large is-fullwidth">
                   <span class="mdi mdi-magnify"/>
                   Search
                 </button>
-              </section>
+              </form>
               <br>
             </div>
           </div>
@@ -57,15 +56,15 @@ export default {
   data() {
     const today = new Date();
     return {
-      city: "",
+      search: "",
       checkInDate: null,
       checkOutDate: null,
-      checkInMinDate: new Date(
+      minCheckInDate: new Date(
         today.getFullYear(),
         today.getMonth(),
         today.getDate()
       ),
-      checkOutMinDate: new Date(
+      minCheckOutDate: new Date(
         today.getFullYear(),
         today.getMonth(),
         today.getDate() + 1
@@ -73,14 +72,24 @@ export default {
     };
   },
   methods: {
-    search() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
-          this.$router.push(`/listings?search=${this.city}`)
-          return;
-        }
-        this.$toasted.error("Correct them errors!");
-      });
+    doSearch() {
+      let url = new URL(`${window.location.href}listings`);
+      console.log(url)
+      if (this.search) {
+        url.searchParams.append("search", this.search);
+      }
+      if (this.checkInDate) {
+        url.searchParams.append("free_from", this.$moment(this.checkInDate).format('YYYY-MM-DD'));
+      }
+      if (this.checkOutDate) {
+        url.searchParams.append("free_to", this.$moment(this.checkOutDate).format('YYYY-MM-DD'));
+      }
+      window.location.href = url;
+    },
+    setMinCheckOutDate(checkInDate) {
+      var result = new Date(checkInDate);
+      result.setDate(result.getDate() + 1);
+      this.minCheckOutDate = result;
     }
   },
   transition: "bounce"
