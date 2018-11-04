@@ -15,7 +15,7 @@
         <div class="media">
           <div class="media-left">
             <figure class="image is-128x128">
-              <img :src="booking.listing.images[0].image">
+              <img :src="booking.listing.images[0].image_url">
             </figure>
           </div>
           <div class="media-right">
@@ -41,6 +41,9 @@
 
 <script>
 export default {
+  middleware: [
+    'auth'
+  ],
   data() {
     return {
       bookings: []
