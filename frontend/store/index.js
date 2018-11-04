@@ -8,7 +8,9 @@ export const getters = {
   },
   
   isResident(state) {
-    return state.auth.user.is_resident
+    if (getters.loggedInUser(state)) {
+      return state.auth.user.is_resident
+    }
   }
 }
 

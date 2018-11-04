@@ -23,7 +23,8 @@
     "bulma-extensions": "^3.0.0",
     "nuxt": "^2.0.0",
     "nuxt-buefy": "0.2.3",
-    "nuxt-validate": "^0.1.1"
+    "nuxt-validate": "^0.1.1",
+    "vue2-google-maps": "^0.10.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -34,6 +35,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-vue": "^4.0.0",
     "node-sass": "^4.9.4",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "vueperslides": "^1.13.7"
   }
 }

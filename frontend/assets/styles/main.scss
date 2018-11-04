@@ -11,7 +11,7 @@ $warning: $yellow;
 $info: $blue-green;
 
 @import "~bulma/bulma";
-@import '../node_modules/bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.sass';
+@import '~/node_modules/bulma-extensions/bulma-tooltip/dist/css/bulma-tooltip.sass';
 
 .page-enter-active, .page-leave-active {
   transition: opacity .5s

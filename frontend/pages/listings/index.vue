@@ -14,15 +14,15 @@
           class="card"
           @click="$router.push(`/listings/${listing.id}`)">
           <div class="card-image">
-            <figure class="image">
-              <img src="https://media.equityapartments.com/images/c_crop,x_0,y_0,w_1920,h_1080/c_fill,w_1920,h_1080/q_80/4011-1/moda-apartments-exterior.jpg">
+            <figure class="image is-16by9">
+              <img :src="listing.images[0].image">
             </figure>
           </div>
           <div class="card-content">
             <div class="media">
               <div class="media-content has-text-centered">
                 <p class="title is-4">{{ listing.title }}</p>
-                <p class="subtitle is-6">{{ listing.location.name }} 	&bull; ${{ listing.price_per_night }}/night</p>
+                <p class="subtitle is-6">{{ listing.location.title }} &bull; ${{ listing.price_per_night }}/night</p>
               </div>
             </div>
           </div>

@@ -10,12 +10,13 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'The web client for staya' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://unpkg.com/vueperslides/dist/vueperslides.min.css' }
     ]
   },
 
   css: [
-    { src: '@/assets/main.scss', lang: 'sass' },
+    { src: '@/assets/styles/main.scss', lang: 'sass' },
     { src: '@/node_modules/@mdi/font/scss/materialdesignicons.scss', lang: 'sass'}
   ],
 
@@ -36,7 +37,10 @@ module.exports = {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules)/,
+          options: {
+            fix: true
+          }
         })
       }
     }
@@ -51,6 +55,10 @@ module.exports = {
     '@nuxtjs/toast',
     'nuxt-buefy',
     'nuxt-validate'
+  ],
+
+  plugins: [
+    { src: '~/plugins/vueper-slides', ssr: false }
   ],
 
   toast: {
