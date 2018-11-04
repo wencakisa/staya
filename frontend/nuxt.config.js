@@ -68,7 +68,7 @@ module.exports = {
   },
 
   axios: {
-    baseURL: 'http://localhost:8000/api/v1'
+    baseURL: 'http://hk-pu6ki.staykeepers.com:8000/api/v1'
   },
 
   auth: {
