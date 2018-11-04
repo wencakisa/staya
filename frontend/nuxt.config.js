@@ -53,6 +53,7 @@ module.exports = {
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
+    '@nuxtjs/moment',
     'nuxt-buefy',
     'nuxt-validate'
   ],
