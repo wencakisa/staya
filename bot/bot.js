@@ -11,7 +11,7 @@ const bot = new BootBot({
 })
 
 const botPort = 3030
-const baseAPIUrl = 'http://localhost:8000/api/v1/'
+const baseAPIUrl = 'http://www.hk-pu6ki.staykeepers.com:8000/api/v1/'
 const baseClientUrl = 'http://localhost:3000/'
 
 bot.setGreetingText('Hello, I am Staya Chat Bot! With me you can easily operate with Staya app directly from your Messenger! :)')
