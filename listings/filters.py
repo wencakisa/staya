@@ -11,10 +11,16 @@ class ListingsFreeDateFilter(filters.BaseFilterBackend):
         if free_from is not None and free_to is not None:
             free_range = [free_from, free_to]
 
-            queryset = queryset.exclude(
-                bookings__check_in__range=free_range,
+            # Unbooked listings are also free to book
+            unbooked_queryset = queryset.filter(bookings=None)
+
+            filtered_queryset = queryset.exclude(
+                bookings__check_in__range=free_range
+            ).exclude(
                 bookings__check_out__range=free_range
             )
+
+            queryset = filtered_queryset | unbooked_queryset
 
         return queryset
 
