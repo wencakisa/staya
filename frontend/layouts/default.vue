@@ -74,13 +74,13 @@ html {
 .list-enter-active, .list-leave-active {
   transition: all 1s;
 }
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+.list-enter, .list-leave-to {
   opacity: 0;
   transform: translateY(30px);
 }
 
 .is-fullheight-with-navbar.columns {
-    height: calc(100vh - ( 3.25rem - .75rem ) );
+  height: calc(100vh - ( 3.25rem - .75rem ) );
 }
 </style>
 

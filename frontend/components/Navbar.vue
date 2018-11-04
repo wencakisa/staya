@@ -66,11 +66,6 @@
               class="navbar-item">
               Become resident
             </a>
-            <nuxt-link 
-              :to="`/users/${$auth.user.username}`" 
-              class="navbar-item">
-              My Profile
-            </nuxt-link>
             <a 
               v-if="$store.getters.isResident"
               :href="`/listings?search=${$auth.user.username}`" 
@@ -88,21 +83,13 @@
       </div>
     </div>
   </nav>
-
 </template>
 
 <script>
-import AddListing from "~/components/AddListing.vue";
-
 export default {
-  components: {
-    AddListing
-  },
-
   data() {
     return {
-      isMenuActive: false,
-      isModalActive: false
+      isMenuActive: false
     };
   },
 
