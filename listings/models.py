@@ -87,7 +87,7 @@ class Booking(models.Model):
     check_out = models.DateField()
 
     class Meta:
-        ordering = ['-check_in']
+        ordering = ['check_in']
 
     def __str__(self):
         return f'{self.__class__.__name__} #{self.id} for {self.listing}'
