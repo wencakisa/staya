@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import environ
 
+environ.Env.read_env('.env')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'cj5ony@w%%37rx55qm*t=7+#s#ge@=ik8ya4_+(w@1lne#1$pd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['localhost', 'hk-pu6ki.staykeepers.com']
 
@@ -199,8 +201,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Cloudinary
-
-environ.Env.read_env('.env')
 
 CLOUDINARY = {
     'cloud_name': os.environ.get('CLOUDINARY_CLOUD_NAME'),
