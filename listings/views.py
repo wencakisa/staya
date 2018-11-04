@@ -6,14 +6,17 @@ from .serializers import (
     AmenitySerializer,
     ListingSerializer,
     BookingSerializer,
-    ReviewSerializer
+    ReviewSerializer,
+    UserBookingSerializer
 )
 from .permissions import (
+    IsCurrentUser,
     IsResidentUser,
     ListingCreatingPermission,
     ListingModifyingPermission,
     ListingBookingPermission,
-    ListingReviewPermission
+    ListingReviewPermission,
+    ListingIsUnbookedYet
 )
 from .filters import ListingsFreeDateFilter, NearbyListingsFilter
 
@@ -42,9 +45,7 @@ class ListingViewSet(viewsets.ModelViewSet):
 
 class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
-    permission_classes = (IsAuthenticated, ListingBookingPermission)
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('user__id', 'user__username')
+    permission_classes = (IsAuthenticated, ListingBookingPermission, ListingIsUnbookedYet)
 
     def get_queryset(self):
         return Booking.current_bookings().filter(listing=self.kwargs['listing_pk'])
@@ -58,6 +59,14 @@ class BookingViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(self.request, listing)
 
         serializer.save(user=user, listing=listing)
+
+
+class UserBookings(generics.ListAPIView):
+    serializer_class = UserBookingSerializer
+    permission_classes = (IsAuthenticated, IsCurrentUser)
+
+    def get_queryset(self):
+        return Booking.objects.filter(user=self.request.user)
 
 
 class ReviewViewSet(viewsets.ModelViewSet):

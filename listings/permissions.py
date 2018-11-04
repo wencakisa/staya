@@ -1,6 +1,13 @@
 from rest_framework import permissions
 
 
+class IsCurrentUser(permissions.BasePermission):
+    message = 'You can view only your own bookings.'
+
+    def has_object_permission(self, request, view, obj):
+        return obj.user == request.user
+
+
 class IsResidentUser(permissions.BasePermission):
     message = 'You have to be a resident user in order to access this view.'
 
@@ -42,3 +49,7 @@ class ListingBookingPermission(BaseNestedListingResourcePermission):
 
 class ListingReviewPermission(BaseNestedListingResourcePermission):
     message = 'You can not review your own listings.'
+
+
+class ListingIsUnbookedYet(permissions.BasePermission):
+    pass

@@ -79,3 +79,11 @@ class ListingSerializer(serializers.ModelSerializer):
             ListingImage.objects.create(listing=listing, **image_data)
 
         return listing
+
+
+class UserBookingSerializer(serializers.ModelSerializer):
+    listing = ListingSerializer(read_only=True)
+
+    class Meta:
+        model = Booking
+        fields = ('id', 'check_in', 'check_out', 'listing')
