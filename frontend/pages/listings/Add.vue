@@ -226,7 +226,7 @@ export default {
             this.$toasted.error("Could not find location's coordinates")
             return
           }
-          this.location.longtitude = res.data.results[0].geometry.location.lng.toFixed(6)
+          this.location.longitude = res.data.results[0].geometry.location.lng.toFixed(6)
           this.location.latitude = res.data.results[0].geometry.location.lat.toFixed(6)
         }).catch(e => {
           console.log(e.data)
