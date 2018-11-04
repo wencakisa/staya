@@ -43,7 +43,7 @@ bot.on('attachment', (payload, chat) => {
           chatElements.push({
             title: listing.title,
             subtitle: listing.description,
-            image_url: listing.images[0].image,
+            image_url: listing.images[0].image_url,
             default_action: {
               type: 'web_url',
               url: listingUrl
@@ -59,9 +59,7 @@ bot.on('attachment', (payload, chat) => {
         })
 
         chat.say({
-          top_element_style: 'COMPACT',
-          elements: chatElements,
-          buttons: []
+          cards: chatElements
         })
       })
       .catch((err) => {
