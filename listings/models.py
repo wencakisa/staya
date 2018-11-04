@@ -1,10 +1,10 @@
-from math import cos
 from datetime import date
 
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from users.models import User
+from .utils import longitude_nearby_locations_range, latitude_nearby_locations_range
 
 
 def listing_image_directory_path(instance, filename):
@@ -12,11 +12,6 @@ def listing_image_directory_path(instance, filename):
 
 
 class Location(models.Model):
-    LAT_DEGREE_TO_KM = 110.574
-    LONG_DEGREE_TO_KM = 111.320 * cos(LAT_DEGREE_TO_KM)
-    NEARBY_KM_LAT = LAT_DEGREE_TO_KM * 0.005
-    NEARBY_KM_LONG = LONG_DEGREE_TO_KM * 0.005
-
     title = models.CharField(max_length=256)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
@@ -73,6 +68,34 @@ class Listing(models.Model):
             return 0
 
         return self.reviews_score_sum / self.total_reviews
+
+    @staticmethod
+    def nearby_listings(queryset, longitude, latitude):
+        longitude_range = longitude_nearby_locations_range(longitude)
+        latitude_range = latitude_nearby_locations_range(latitude)
+
+        return queryset.filter(
+            location__longitude__range=longitude_range,
+            location__latitude__range=latitude_range
+        )[:5]
+
+    @staticmethod
+    def unbooked_listings(queryset, free_from, free_to):
+        free_range = [free_from, free_to]
+
+        # Unbooked listings are also free to book
+        unbooked_queryset = queryset.filter(bookings=None)
+
+        filtered_queryset = queryset.exclude(
+            bookings__check_in__range=free_range
+        ).exclude(
+            bookings__check_out__range=free_range
+        )
+
+        return filtered_queryset | unbooked_queryset
+
+    # def is_unbooked(self, free_from, free_to):
+    #     return self.unbooked_listings(..., free_from, free_to).empty()
 
 
 class ListingImage(models.Model):
