@@ -114,7 +114,7 @@ export default {
       amenities: [],
       location: {
         title: '',
-        longtitude: 0,
+        longitude: 0,
         latitude: 0
       },
       guests: 0,

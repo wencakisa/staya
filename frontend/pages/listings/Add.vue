@@ -149,7 +149,7 @@ export default {
       address: '',
       location: {
         title: '',
-        longtitude: null,
+        longitude: null,
         latitude: null
       },
       price: null,
@@ -179,7 +179,7 @@ export default {
       this.geocode().then(() => {
         console.log(this.location)
 
-        if (this.location.longtitude && this.location.latitude) {
+        if (this.location.longitude && this.location.latitude) {
           this.$axios.post('/listings/', {
             amenities: this.amenities,
             location: this.location,
