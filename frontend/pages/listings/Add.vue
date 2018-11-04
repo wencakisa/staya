@@ -168,6 +168,7 @@ export default {
     submit() {
       if (!this.$store.getters.isResident) {
         this.$axios.put('/auth/user', {
+          username: this.$auth.user.username,
           is_resident: true
         }).then(() => {
           this.$store.commit('becomeResident')
