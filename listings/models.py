@@ -94,8 +94,14 @@ class Listing(models.Model):
 
         return filtered_queryset | unbooked_queryset
 
-    # def is_unbooked(self, free_from, free_to):
-    #     return self.unbooked_listings(..., free_from, free_to).empty()
+    def is_unbooked(self, free_from, free_to):
+        free_range = [free_from, free_to]
+
+        return not self.bookings.all().exists() or self.bookings.exclude(
+            check_in__range=free_range
+        ).exclude(
+            check_out__range=free_range
+        ).exists()
 
 
 class ListingImage(models.Model):
