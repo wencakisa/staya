@@ -10,6 +10,7 @@ const bot = new BootBot({
   appSecret: process.env.FB_APP_SECRET
 })
 
+const botPort = 3030
 const baseAPIUrl = 'http://localhost:8000/api/v1/'
 const baseClientUrl = 'http://localhost:3000/'
 
@@ -37,27 +38,30 @@ bot.on('attachment', (payload, chat) => {
 
         let chatElements = []
         resp.data.forEach(listing => {
+          let listingUrl = `${baseClientUrl}listings/${listing.id}`
+
           chatElements.push({
             title: listing.title,
             subtitle: listing.description,
             image_url: listing.images[0].image,
             default_action: {
               type: 'web_url',
-              url: `${baseClientUrl}listings/${listing.id}`
-            }
+              url: listingUrl
+            },
+            buttons: [
+              {
+                title: 'Book now',
+                type: 'web_url',
+                url: listingUrl
+              }
+            ]
           })
         })
 
         chat.say({
-          top_element_style: 'compact',
+          top_element_style: 'COMPACT',
           elements: chatElements,
-          buttons: [
-            {
-              title: 'Book now',
-              type: 'web_url',
-              url: `${baseClientUrl}`
-            }
-          ]
+          buttons: []
         })
       })
       .catch((err) => {
@@ -66,4 +70,4 @@ bot.on('attachment', (payload, chat) => {
   }
 })
 
-bot.start()
+bot.start(botPort)
