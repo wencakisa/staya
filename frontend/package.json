@@ -23,7 +23,7 @@
     "@nuxtjs/toast": "^3.0.1",
     "bulma-extensions": "^3.0.0",
     "moment": "^2.22.2",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "nuxt-buefy": "0.2.3",
     "nuxt-validate": "^0.1.1"
   },
